@@ -16,14 +16,14 @@ object DataframeExercise extends App {
    */
   val spark = SparkSession.builder()
     .appName("DataFrames Exercise")
-    .config("spark.master","local")
+    .config("spark.master", "local")
     .getOrCreate()
 
 
   val movieDf = spark.read
     .format("json")
-    .option("inferSchema","true")
-    .option("mode","failFast") // dropMalformed, permissive(default )
+    .option("inferSchema", "true")
+    .option("mode", "failFast") // dropMalformed, permissive(default )
     .load("src/main/resources/data/movies.json")
 
   movieDf.printSchema()
@@ -40,8 +40,10 @@ object DataframeExercise extends App {
   //val mobileDf = spark.createDataFrame(mobile)
 
   // option 2
+
   import spark.implicits._
-  val mobileDfWithImplicit = mobile.toDF("make","model","screen dimension","camera")
+
+  val mobileDfWithImplicit = mobile.toDF("make", "model", "screen dimension", "camera")
 
   mobileDfWithImplicit.show()
   mobileDfWithImplicit.printSchema()

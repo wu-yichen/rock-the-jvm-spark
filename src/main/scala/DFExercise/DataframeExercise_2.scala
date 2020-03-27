@@ -13,19 +13,21 @@ object DataframeExercise_2 extends App {
 
   val spark = SparkSession.builder()
     .appName("df exercise 2")
-    .config("spark.master","local")
+    .config("spark.master", "local")
     .getOrCreate()
 
-  val movieDf = spark.read.option("inferSchema","true").json("src/main/resources/data/movies.json")
+  val movieDf = spark.read.option("inferSchema", "true").json("src/main/resources/data/movies.json")
   movieDf.show()
 
   // read the movies DF and select 2 columns
+
   import spark.implicits._
+
   val selectedDf = movieDf.select(
     col("Creative_Type"),
     $"Title")
 
-  val selectedDfExpr = movieDf.selectExpr("Creative_Type","Title")
+  val selectedDfExpr = movieDf.selectExpr("Creative_Type", "Title")
   selectedDfExpr.show()
 
   // create another column summing up the total profit of the movies
@@ -33,7 +35,7 @@ object DataframeExercise_2 extends App {
     $"Title",
     col("US_Gross"),
     'Worldwide_Gross,
-   (col("US_Gross") + col("Worldwide_Gross")).as("Total_profit")).show()
+    (col("US_Gross") + col("Worldwide_Gross")).as("Total_profit")).show()
 
   movieDf.selectExpr(
     "Title",
@@ -43,5 +45,5 @@ object DataframeExercise_2 extends App {
 
   // select all comedy movies with IMDB rating above 6
 
-  movieDf.selectExpr("Major_Genre","IMDB_Rating","Title").filter("Major_Genre = 'Comedy' and IMDB_Rating > 6").show()
+  movieDf.selectExpr("Major_Genre", "IMDB_Rating", "Title").filter("Major_Genre = 'Comedy' and IMDB_Rating > 6").show()
 }

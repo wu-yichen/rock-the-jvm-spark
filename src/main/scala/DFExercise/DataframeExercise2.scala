@@ -56,9 +56,9 @@ object DataframeExercise2 extends App {
 
   // unioning = adding more rows
   println("--------------------unioning------------------------")
-  val moreCarsDF = spark.read.option("inferSchema","true").json("src/main/resources/data/more_cars.json")
+  val moreCarsDF = spark.read.option("inferSchema", "true").json("src/main/resources/data/more_cars.json")
   val allCarsDF = carsDF.union(moreCarsDF)
-  allCarsDF.show(100,false)
+  allCarsDF.show(100, false)
 
   carsDF.where("Name = 'ferrari enzo'").show()
   allCarsDF.filter("Name = 'ferrari enzo'").show()
