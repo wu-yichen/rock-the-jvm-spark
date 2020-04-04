@@ -44,7 +44,7 @@ object SparkSql extends App {
   def transfer(tableNames: List[String], isWrite: Boolean = false) = tableNames.foreach {
     name =>
       val tableDf = readTable(name)
-     // tableDf.createOrReplaceTempView(name)
+      // tableDf.createOrReplaceTempView(name)
       if (isWrite) tableDf.write.mode(SaveMode.Overwrite).saveAsTable(name)
   }
 
@@ -67,10 +67,10 @@ object SparkSql extends App {
   //movieTbl.show()
 
   // 2. count how many employees we have in between jan 1 2000 and jan 1 2001
- spark.sql(
-   """
-     |select count(*) from employees where hire_date > '1999-01-01' and hire_date < '2001-01-01'
-     |""".stripMargin)
+  spark.sql(
+    """
+      |select count(*) from employees where hire_date > '1999-01-01' and hire_date < '2001-01-01'
+      |""".stripMargin)
 
   // 3. show the average salaries for the employees hired in between those dates grouped by department
   spark.sql(
